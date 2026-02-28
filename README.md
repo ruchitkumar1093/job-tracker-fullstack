@@ -59,36 +59,11 @@ MySQL Database
 
 ---
 
-## Project Structure
-
-job-tracker-fullstack/
-│
-├── job-tracker-backend/
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   ├── routes/
-│   ├── middleware/
-│   ├── server.js
-│   └── package.json
-│
-├── job-tracker-frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── App.js
-│   │   └── index.js
-│   └── package.json
-│
-└── README.md
-
----
-
 ## How To Run Locally
 
 ### Clone the Repository
 
-git clone https://github.com/YOUR_USERNAME/job-tracker-fullstack.git
+git clone https://github.com/ruchitkumar1093/job-tracker-fullstack.git
 cd job-tracker-fullstack
 
 ---
