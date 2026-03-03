@@ -5,10 +5,16 @@ import { useNavigate, Link } from "react-router-dom";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
+
+        if (loading) return; // prevent double clicks
+
+        setLoading(true);
 
         try {
             const response = await axios.post(
@@ -21,6 +27,8 @@ function Login() {
 
         } catch (error) {
             alert(error.response?.data?.message || "Login failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -46,7 +54,9 @@ function Login() {
                         required
                     />
 
-                    <button type="submit">Login</button>
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Logging in... Please wait ⏳" : "Login"}
+                    </button>
                 </form>
 
                 <div className="link">
