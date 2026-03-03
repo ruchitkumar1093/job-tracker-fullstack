@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const { query } = require('../config/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -11,8 +11,7 @@ exports.register = async (req, res) => {
             return res.status(400).json({ message: "All fields are required" });
         }
 
-        // Check if user already exists
-        const [existingUser] = await pool.query(
+        const existingUser = await query(
             'SELECT * FROM users WHERE email = ?',
             [email]
         );
@@ -21,11 +20,9 @@ exports.register = async (req, res) => {
             return res.status(400).json({ message: "User already exists" });
         }
 
-        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert user
-        await pool.query(
+        await query(
             'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
             [name, email, hashedPassword]
         );
@@ -38,7 +35,6 @@ exports.register = async (req, res) => {
     }
 };
 
-
 // LOGIN USER
 exports.login = async (req, res) => {
     try {
@@ -48,8 +44,7 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: "All fields are required" });
         }
 
-        // Find user
-        const [users] = await pool.query(
+        const users = await query(
             'SELECT * FROM users WHERE email = ?',
             [email]
         );
@@ -60,17 +55,15 @@ exports.login = async (req, res) => {
 
         const user = users[0];
 
-        // Compare password
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        // Generate JWT
         const token = jwt.sign(
             { id: user.id },
-            process.env.JWT_SECRET || "secretkey",
+            process.env.JWT_SECRET,
             { expiresIn: "1d" }
         );
 

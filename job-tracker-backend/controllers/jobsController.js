@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const { query } = require('../config/db');
 
 // CREATE JOB
 exports.createJob = async (req, res) => {
@@ -9,9 +9,9 @@ exports.createJob = async (req, res) => {
             return res.status(400).json({ message: "Title and Company are required" });
         }
 
-        await pool.query(
+        await query(
             `INSERT INTO jobs (title, company, status, location, notes, applied_date, user_id)
-             VALUES (?, ?, ?, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
             [
                 title,
                 company,
@@ -31,10 +31,10 @@ exports.createJob = async (req, res) => {
     }
 };
 
-// GET ALL JOBS (only for logged-in user)
+// GET JOBS
 exports.getJobs = async (req, res) => {
     try {
-        const [jobs] = await pool.query(
+        const jobs = await query(
             'SELECT * FROM jobs WHERE user_id = ? ORDER BY id DESC',
             [req.user.id]
         );
@@ -53,10 +53,10 @@ exports.updateJob = async (req, res) => {
         const { id } = req.params;
         const { title, company, status, location, notes, applied_date } = req.body;
 
-        await pool.query(
+        await query(
             `UPDATE jobs 
-             SET title=?, company=?, status=?, location=?, notes=?, applied_date=?
-             WHERE id=? AND user_id=?`,
+       SET title=?, company=?, status=?, location=?, notes=?, applied_date=?
+       WHERE id=? AND user_id=?`,
             [
                 title,
                 company,
@@ -82,7 +82,7 @@ exports.deleteJob = async (req, res) => {
     try {
         const { id } = req.params;
 
-        await pool.query(
+        await query(
             'DELETE FROM jobs WHERE id=? AND user_id=?',
             [id, req.user.id]
         );
