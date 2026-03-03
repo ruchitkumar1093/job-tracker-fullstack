@@ -55,3 +55,52 @@ button:hover {
     text-align: center;
     margin-top: 15px;
 }
+
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.auth-card h2 {
+    margin-bottom: 20px;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.auth-card button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.auth-card button:hover {
+    background: #5a67d8;
+}
+
+.auth-card span {
+    color: #667eea;
+    cursor: pointer;
+    font-weight: bold;
+}

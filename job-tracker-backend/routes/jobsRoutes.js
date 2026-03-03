@@ -9,9 +9,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 router.post('/', authMiddleware, jobsController.createJob);
 
 // Get All Jobs
-router.get('/', authMiddleware, jobsController.getJobs);
-
-// Update Job
+router.get('/', authMiddleware, jobsController.getJobs);// Update Job
 router.put('/:id', authMiddleware, jobsController.updateJob);
 
 // Delete Job
