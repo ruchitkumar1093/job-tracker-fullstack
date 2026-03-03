@@ -19,7 +19,7 @@ function Dashboard() {
     const fetchJobs = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:5000/api/jobs",
+                "https://job-tracker-backend-6yxc.onrender.com/api/jobs",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

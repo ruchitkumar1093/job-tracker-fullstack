@@ -12,7 +12,7 @@ function Login() {
 
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/auth/login",
+                "https://job-tracker-backend-6yxc.onrender.com/api/auth/login",
                 { email, password }
             );
 
