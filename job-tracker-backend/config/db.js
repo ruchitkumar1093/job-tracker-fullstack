@@ -10,9 +10,9 @@ if (process.env.DB_TYPE === "postgres") {
 
     db = new Pool({
         connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false,
-        },
+        ssl: process.env.DB_SSL === "true"
+            ? { rejectUnauthorized: false }
+            : false,
     });
 
 } else {
@@ -26,10 +26,13 @@ if (process.env.DB_TYPE === "postgres") {
     });
 }
 
-async function query(sql, params) {
+async function query(sql, params = []) {
     if (isPostgres) {
         let index = 0;
+
+        // Convert ? placeholders to $1, $2, $3 for PostgreSQL
         const convertedSql = sql.replace(/\?/g, () => `$${++index}`);
+
         const result = await db.query(convertedSql, params);
         return result.rows;
     } else {
